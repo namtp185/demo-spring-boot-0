@@ -1,4 +1,4 @@
-package com.example.springboot;
+package com.example.rest;
 
 import com.example.entity.User;
 
@@ -30,7 +30,7 @@ public class HelloController {
 
 	@PostMapping("/users")
 	public String createUser(@RequestBody User userForm) {
-		return "creating user with info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender(); 
+		return "creating user with info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
 	}
 
 	@GetMapping("/users/{id}")
@@ -41,7 +41,7 @@ public class HelloController {
 
 	@PutMapping(value="/users/{id}")
 	public String editUser(@PathVariable String id, @RequestBody User userForm) {
-		return "editing for user id:" +  id + " with new info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender(); 
+		return "editing for user id:" +  id + " with new info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
 	}
 
 	@DeleteMapping(value="/users/{id}")
@@ -50,9 +50,9 @@ public class HelloController {
 	}
 	// @PostMapping(value="/users")
 	// public User createUser(@RequestBody User user) {
-		
+
 	// 	return user;
 	// }
-	
+
 
 }

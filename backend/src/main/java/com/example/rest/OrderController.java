@@ -1,16 +1,10 @@
-package com.example.springboot;
+package com.example.rest;
 
 import java.io.IOException;
 
-import com.example.dto.AddressDTO;
-import com.example.dto.OrderDTO;
-import com.example.dto.OrderDTO;
-import com.example.entity.Address;
-import com.example.entity.Order;
 import com.example.entity.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +34,7 @@ public class OrderController {
 	public String createOrder(@RequestBody String orderJsonString) throws IOException {
 		Order order = objectMapper.readerFor(Order.class).readValue(orderJsonString);
 
-		return String.format("creating order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f", 
+		return String.format("creating order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f",
 			order.getType(),
 			order.getColor(),
 			order.getStore(),
@@ -62,7 +56,7 @@ public class OrderController {
 	@PutMapping(value="/orders/{id}")
 	public String editOrder(@PathVariable String id, @RequestBody String orderJsonString) throws IOException {
 		Order order = objectMapper.readerFor(Order.class).readValue(orderJsonString);
-		return String.format("editing order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f", 
+		return String.format("editing order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f",
 		order.getType(),
 		order.getColor(),
 		order.getStore(),
@@ -78,6 +72,6 @@ public class OrderController {
 	public String deleteOrder(@PathVariable String id) {
 		return "deleting for order id:" +  id;
 	}
-	
+
 
 }
