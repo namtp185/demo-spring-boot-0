@@ -2,7 +2,7 @@ package com.example.rest;
 
 import java.io.IOException;
 
-import com.example.entity.Order;
+import com.example.dto.OrderDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +32,7 @@ public class OrderController {
 
 	@PostMapping("/orders")
 	public String createOrder(@RequestBody String orderJsonString) throws IOException {
-		Order order = objectMapper.readerFor(Order.class).readValue(orderJsonString);
+		OrderDTO order = objectMapper.readerFor(OrderDTO.class).readValue(orderJsonString);
 
 		return String.format("creating order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f",
 			order.getType(),
@@ -55,8 +55,9 @@ public class OrderController {
 
 	@PutMapping(value="/orders/{id}")
 	public String editOrder(@PathVariable String id, @RequestBody String orderJsonString) throws IOException {
-		Order order = objectMapper.readerFor(Order.class).readValue(orderJsonString);
-		return String.format("editing order with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f",
+		OrderDTO order = objectMapper.readerFor(OrderDTO.class).readValue(orderJsonString);
+		return String.format("editing order id %s with info type: %s, color: %s, store: %s, value: %s, price: %s, receivedTime: %s, customerName: %s, latitude: %f, longtitude: %f", 
+		id,
 		order.getType(),
 		order.getColor(),
 		order.getStore(),

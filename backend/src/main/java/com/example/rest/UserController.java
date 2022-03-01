@@ -32,9 +32,14 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
+<<<<<<< HEAD:backend/src/main/java/com/example/rest/HelloController.java
+	public String createUser(@RequestBody User userForm) {
+		return "creating user with info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
+=======
 	public String createUser(@RequestBody String userJsonString) throws IOException {
 		UserDTO user = objectMapper.readerFor(UserDTO.class).readValue(userJsonString);
 		return "creating user with info, name: " + user.getName() + ", age: " + String.valueOf(user.getAge()) + ", occupation: " + user.getOccupation() + ", gender: " + user.getGender(); 
+>>>>>>> master:backend/src/main/java/com/example/rest/UserController.java
 	}
 
 	@GetMapping("/users/{id}")
@@ -44,9 +49,14 @@ public class UserController {
 	}
 
 	@PutMapping(value="/users/{id}")
+<<<<<<< HEAD:backend/src/main/java/com/example/rest/HelloController.java
+	public String editUser(@PathVariable String id, @RequestBody User userForm) {
+		return "editing for user id:" +  id + " with new info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
+=======
 	public String editUser(@PathVariable String id, @RequestBody String userJsonString) throws IOException {
 		UserDTO user = objectMapper.readerFor(UserDTO.class).readValue(userJsonString);
 		return "editing user id: " +  id + " with info, name: " + user.getName() + ", age: " + String.valueOf(user.getAge()) + ", occupation: " + user.getOccupation() + ", gender: " + user.getGender(); 
+>>>>>>> master:backend/src/main/java/com/example/rest/UserController.java
 	}
 
 	@DeleteMapping(value="/users/{id}")
