@@ -1,6 +1,9 @@
 package com.example.rest;
 
-import com.example.entity.User;
+import java.io.IOException;
+
+import com.example.dto.UserDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,12 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-public class HelloController {
+public class UserController {
 
-	private ModelMapper modelMapper;
+	private ObjectMapper objectMapper;
 
-	public HelloController(ModelMapper modelMapper) {
-		this.modelMapper = modelMapper;
+	public UserController(ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
 	}
 
 	@GetMapping("/users")
@@ -29,8 +32,9 @@ public class HelloController {
 	}
 
 	@PostMapping("/users")
-	public String createUser(@RequestBody User userForm) {
-		return "creating user with info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
+	public String createUser(@RequestBody String userJsonString) throws IOException {
+		UserDTO user = objectMapper.readerFor(UserDTO.class).readValue(userJsonString);
+		return "creating user with info, name: " + user.getName() + ", age: " + String.valueOf(user.getAge()) + ", occupation: " + user.getOccupation() + ", gender: " + user.getGender(); 
 	}
 
 	@GetMapping("/users/{id}")
@@ -40,8 +44,9 @@ public class HelloController {
 	}
 
 	@PutMapping(value="/users/{id}")
-	public String editUser(@PathVariable String id, @RequestBody User userForm) {
-		return "editing for user id:" +  id + " with new info, name: " + userForm.getName() + ", age: " + String.valueOf(userForm.getAge()) + "occupation:" + userForm.getOccupation() + "gender: " + userForm.getGender();
+	public String editUser(@PathVariable String id, @RequestBody String userJsonString) throws IOException {
+		UserDTO user = objectMapper.readerFor(UserDTO.class).readValue(userJsonString);
+		return "editing user id: " +  id + " with info, name: " + user.getName() + ", age: " + String.valueOf(user.getAge()) + ", occupation: " + user.getOccupation() + ", gender: " + user.getGender(); 
 	}
 
 	@DeleteMapping(value="/users/{id}")
