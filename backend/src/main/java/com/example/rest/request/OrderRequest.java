@@ -1,10 +1,14 @@
 package com.example.rest.request;
 
-import com.example.entity.User;
-import lombok.*;
-
 import java.time.Instant;
-import java.util.Date;
+
+import com.example.entity.User;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
