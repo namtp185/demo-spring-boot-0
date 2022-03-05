@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
+
 
 @Slf4j
 @RestController
@@ -21,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserControllerV2 {
 
 	@PostMapping()
-	public void createUser(@RequestBody UserRequest userRequest) {
+	public void createUser(@Valid @RequestBody UserRequest userRequest) {
 		log.info("post with user info {}", userRequest);
 	}
 
@@ -29,7 +31,7 @@ public class UserControllerV2 {
 	public void getUser(@PathVariable int id) {
 		log.info("get users with id {}", id);
 	}
-	
+
 	@GetMapping()
 	public void searchUser(@RequestParam(name = "name") String name, @RequestParam(name = "gender") String gender) {
 		log.info("get users with param: name: {}, gender: {}", name, gender);
