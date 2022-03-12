@@ -1,5 +1,7 @@
 package com.example.rest;
 
+import javax.validation.Valid;
+
 import com.example.rest.request.OrderRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class OrderControllerV2 {
 
     @PostMapping()
-    public void createOrder(@RequestBody OrderRequest orderRequest) {
+    public void createOrder(@Valid @RequestBody OrderRequest orderRequest) {
         log.info("post with orderRequest: {}", orderRequest);
     }
 
@@ -29,7 +31,7 @@ public class OrderControllerV2 {
     }
 
     @PutMapping(value="/{id}")
-    public void editOrder(@PathVariable(name = "id") int id, @RequestBody OrderRequest orderRequest) {
+    public void editOrder(@PathVariable(name = "id") int id, @Valid @RequestBody OrderRequest orderRequest) {
         log.info("put with orderRequest: {}", orderRequest);
     }
 

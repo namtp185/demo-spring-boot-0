@@ -2,7 +2,10 @@ package com.example.rest.request;
 
 import java.time.Instant;
 
+import javax.validation.constraints.Min;
+
 import com.example.entity.User;
+import com.example.rest.request.validator.ValidInstant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,8 +22,14 @@ public class OrderRequest {
     private String type;
     private String color;
     private String store;
+
+    @Min(value = 0, message = "value must be greater than zero")
     private int value;
+
+    @Min(value = 0, message = "value must be greater than zero")
     private int price;
+
+    @ValidInstant
     private Instant receiveTime;
     private User customer;
 }
