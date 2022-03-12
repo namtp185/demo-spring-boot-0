@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import javax.validation.Valid;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +17,6 @@ public class User {
     private String occupation;
     private String gender;
 
+    @Valid
     private Address address;
 }

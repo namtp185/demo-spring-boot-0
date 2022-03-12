@@ -2,6 +2,7 @@ package com.example.rest.request;
 
 import java.time.Instant;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import com.example.entity.User;
@@ -31,5 +32,7 @@ public class OrderRequest {
 
     @ValidInstant
     private Instant receiveTime;
+
+    @Valid
     private User customer;
 }
