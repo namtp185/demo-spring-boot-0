@@ -48,8 +48,10 @@ public class UserControllerV2 {
 	@GetMapping()
 	@ResponseBody
 	public List<User> searchUser(@RequestParam(name = "name") String name, @RequestParam(name = "gender") String gender) {
-		log.info("get users with param: name: {}, gender: {}", name, gender);
-		return userService.searchUserByGenderAndName(gender, name);
+		log.info("Enter route: get users with param: name: {}, gender: {}", name, gender);
+		List<User> users = userService.searchUserByGenderAndName(gender, name);
+		log.info("Exit route");
+		return users;
 	}
 
 	@PutMapping("/{id}")
