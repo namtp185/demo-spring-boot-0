@@ -15,15 +15,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserControllerV2Test {
 
-	@Autowired
-	private MockMvc mvc;
+	// @Autowired
+	// private MockMvc mvc;
 
-	@Test
-	public void getHello() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/users?name=nam&gender=male").accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("looking for user with name: " + "nam" + ", gender: " + "male")));
-	}
+	// @Test
+	// public void getHello() throws Exception {
+	// 	mvc.perform(MockMvcRequestBuilders.get("/users?name=nam&gender=male").accept(MediaType.APPLICATION_JSON))
+	// 			.andExpect(status().isOk())
+	// 			.andExpect(content().string(equalTo("looking for user with name: " + "nam" + ", gender: " + "male")));
+	// }
 }
