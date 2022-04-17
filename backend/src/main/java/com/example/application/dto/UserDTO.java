@@ -1,8 +1,5 @@
-package com.example.entity;
+package com.example.application.dto;
 
-import javax.validation.Valid;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,13 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class UserDTO {
     private String name;
     private int age;
     private String occupation;
     private String gender;
-
-    @Valid
-    private Address address;
 }

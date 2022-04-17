@@ -2,7 +2,7 @@ package com.example.rest;
 
 import java.io.IOException;
 
-import com.example.dto.OrderDTO;
+import com.example.application.dto.OrderDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.DeleteMapping;

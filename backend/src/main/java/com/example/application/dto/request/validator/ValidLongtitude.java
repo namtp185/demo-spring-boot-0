@@ -1,4 +1,4 @@
-package com.example.rest.request.validator;
+package com.example.application.dto.request.validator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,12 +10,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = LatitudeValidator.class)
+@Constraint(validatedBy = LongtitudeValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidLatitude {
+public @interface ValidLongtitude {
 
-    String message() default "latitude must be in range -90 and 90";
+    String message() default "longtitude must be in range -180 and 180";
 
     Class<?>[] groups() default {};
 

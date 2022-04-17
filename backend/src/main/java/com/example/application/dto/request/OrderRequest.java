@@ -1,12 +1,10 @@
-package com.example.rest.request;
+package com.example.application.dto.request;
 
 import java.time.Instant;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
-import com.example.entity.User;
-import com.example.rest.request.validator.ValidInstant;
+import com.example.infrastructure.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +28,9 @@ public class OrderRequest {
     @Min(value = 0, message = "value must be greater than zero")
     private int price;
 
-    @ValidInstant
+    // @ValidInstant
     private Instant receiveTime;
 
-    @Valid
-    private User customer;
+    // @Valid
+    private UserEntity customer;
 }

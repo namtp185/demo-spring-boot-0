@@ -1,4 +1,4 @@
-package com.example.rest.request.validator;
+package com.example.application.dto.request.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
