@@ -25,6 +25,9 @@ public class UserRequest {
     @UniqueUsername
     private String username;
 
+    @NotBlank(message = "password can not be blank")
+    private String password;
+
     @NotBlank(message = "name can not be blank")
     private String name;
 

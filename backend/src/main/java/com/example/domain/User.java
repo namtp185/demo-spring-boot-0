@@ -14,6 +14,7 @@ import lombok.Setter;
 public class User {
     private String id;
     private String username;
+    private String password;
     private String name;
     private int age;
     private String occupation;
@@ -22,9 +23,14 @@ public class User {
     public User(UserRequest userRequest) {
         this.id = userRequest.getId() != null ? userRequest.getId() : UUID.randomUUID().toString();
         this.username = userRequest.getUsername();
+        this.password = userRequest.getPassword();
         this.name = userRequest.getName();
         this.age = userRequest.getAge();
         this.occupation = userRequest.getOccupation();
         this.gender = userRequest.getGender();
+    }
+
+    public void enrichPassword(String encodedPassword) {
+        this.password = encodedPassword;
     }
 }

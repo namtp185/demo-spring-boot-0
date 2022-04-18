@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +25,10 @@ public class UserEntity {
 
     @Column(length = 30)
     private String username;
+
+    @Column(length = 80)
+    @JsonIgnore
+    private String password;
 
     @Column(length = 30)
     private String name;
