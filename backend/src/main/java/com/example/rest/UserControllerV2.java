@@ -32,7 +32,7 @@ public class UserControllerV2 {
 
 	UserService userService;
 
-	@PostMapping()
+	@PostMapping("/register")
 	@ResponseBody
 	public User createUser(@Valid @RequestBody UserRequest userRequest) {
 		log.info("post with user info {}", userRequest);

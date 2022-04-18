@@ -11,6 +11,7 @@ import com.example.infrastructure.entity.UserEntity;
 import com.example.infrastructure.repository.UserRepository;
 import com.google.common.collect.Streams;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     UserEntityMapper userEntityMapper;
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getListUser() {
@@ -37,6 +39,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(UserRequest userRequest) {
         User user = new User(userRequest);
+        user.enrichPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println("Password length " + user.getPassword().length());
         UserEntity userEntity = userEntityMapper.toEntity(user);
         userRepository.save(userEntity);
         return user;
