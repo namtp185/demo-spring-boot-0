@@ -1,6 +1,8 @@
 package com.example.application.service.impl;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.example.application.dto.request.UserRequest;
@@ -46,7 +48,12 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public void enrichUser(User user) {
+    public User getUserByUsername(String username) {
+        // use functional interface
+        return findUserByOneField(userRepository::findByUsername, username);
+    }
+
+    private void enrichUser(User user) {
         List<UserRoleEntity> userRoleEntities = userRoleRepository.findByUserId(user.getId());
         List<Role> roles = userRoleEntities.stream()
             .map(userRoleEntityMapper::toDomain)
@@ -61,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     
-    public void assignUserRoleToUser(User user) {
+    private void assignUserRoleToUser(User user) {
         // prepare domain model 
         RoleEntity defaultRoleEntity = roleRepository.findByRoleName("User");
         Role defaultRole = roleEntityMapper.toDomain(defaultRoleEntity);
@@ -75,8 +82,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByID(String id) {
-        // TODO Auto-generated method stub
-        return null;
+        // normal use
+        UserEntity userEntity = userRepository.findById(id);
+        return mapUserEntityToUser(userEntity);
+        // // use functional interface
+        // return findUserByOneField(userRepository::findById, id);
     }
 
     @Override
@@ -106,12 +116,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> searchUserByGenderAndName(String gender, String name) {
-        Iterable<UserEntity> userEntities = userRepository.findByGenderAndName(gender, name);
-        List<User> users =  Streams.stream(userEntities).map(userEntityMapper::toDomain).collect(Collectors.toList());
-        users.forEach(user -> {
-            enrichUser(user);
-        });
+        // Iterable<UserEntity> userEntities = userRepository.findByGenderAndName(gender, name);
+        // return mapUserEntitiesToUsers(userEntities);
+        return findUsersByTwoField(userRepository::findByGenderAndName, gender, name);
+    }
+
+    // private List<User> mapUserEntitiesToUsers(Iterable<UserEntity> userEntities) {
+    //     List<User> users =  Streams.stream(userEntities).map(userEntityMapper::toDomain).collect(Collectors.toList());
+    //     users.forEach(user -> {
+    //         enrichUser(user);
+    //     });
+    //     return users;
+    // }
+
+
+    private User findUserByOneField(Function<String, UserEntity> userRepositoryFn, String keyword) {
+        UserEntity userEntity = userRepositoryFn.apply(keyword);
+        return mapUserEntityToUser(userEntity);
+    }
+
+    private List<User> findUsersByTwoField(BiFunction<String, String, List<UserEntity>> userRepositoryFn, String keyword1, String keyword2) {
+        Iterable<UserEntity> userEntities = userRepositoryFn.apply(keyword1, keyword2);
+        return mapUserEntitiesToUsers(userEntities);
+    }
+
+    private List<User> mapUserEntitiesToUsers(Iterable<UserEntity> userEntities) {
+        List<User> users =  Streams.stream(userEntities).map(this::mapUserEntityToUser).collect(Collectors.toList());
         return users;
+    }
+
+    private User mapUserEntityToUser(UserEntity userEntity) {
+        User user = userEntityMapper.toDomain(userEntity);
+        enrichUser(user);
+        return user;
     }
     
 }
