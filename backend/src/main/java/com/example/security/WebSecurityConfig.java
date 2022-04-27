@@ -67,12 +67,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .authorizeRequests()
                 .antMatchers("/v2/login").permitAll()
-                // .antMatchers("/v2/users/").hasRole(Roles.ADMIN_ROLE)
-                // .antMatchers("/v2/users/search").hasRole(Roles.ADMIN_ROLE)
+                .antMatchers("/v2/users/").hasRole("ADMIN")
+                .antMatchers("/v2/users/search").hasRole("ADMIN")
                 .antMatchers("/v2/users/register").permitAll()
                 .anyRequest().authenticated();
         
-    
+        
         // filter to check jwt
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
