@@ -27,6 +27,10 @@ public class User {
     private String gender;
     private List<Role> roles;
 
+    private boolean isEnabled;
+    private String email;
+
+
     public User(UserRequest userRequest) {
         this.id = userRequest.getId() != null ? userRequest.getId() : UUID.randomUUID().toString();
         this.username = userRequest.getUsername();
@@ -36,6 +40,9 @@ public class User {
         this.occupation = userRequest.getOccupation();
         this.gender = userRequest.getGender();
         this.roles = new ArrayList<>();
+
+        this.isEnabled = userRequest.isEnabled();
+        this.email = userRequest.getEmail();
     }
 
     public void enrichPassword(String encodedPassword) {

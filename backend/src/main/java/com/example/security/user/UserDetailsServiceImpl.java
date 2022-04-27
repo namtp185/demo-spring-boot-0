@@ -2,8 +2,8 @@ package com.example.security.user;
 
 import javax.transaction.Transactional;
 
-import com.example.infrastructure.entity.UserEntity;
-import com.example.infrastructure.repository.UserRepository;
+import com.example.application.service.UserService;
+import com.example.domain.User;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,19 +18,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    UserRepository userRepository;
+    UserService userService;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("username debug " + username);
-        UserEntity userEntity = userRepository.findByUsername(username);
-        log.info("user entity " + userEntity);
-        if (userEntity == null) {
+        User user = userService.getUserByUsername(username);
+        
+        log.info("user domain object " + user);
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
 
-        return UserDetailsImpl.build(userEntity);
+        return UserDetailsImpl.build(user);
     }
     
 }

@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import  org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +30,23 @@ public class LoginControllerV2 {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @PostMapping()
     public JwtResponse authenticateUser(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
         System.out.println("passs " + password + ", " + username);
+        // UserDetailsImpl userDetailsImpl = (UserDetailsImpl)userDetailsService.loadUserByUsername(username);
+        
         try {
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     loginRequest.getUsername(), 
-                    loginRequest.getPassword())
+                    loginRequest.getPassword()
+                    // userDetailsImpl.getAuthorities()
+                )
             );
 
         // if no expections are thrown, it indicates that information is legal

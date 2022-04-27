@@ -10,6 +10,7 @@ import com.example.application.mapper.RoleEntityMapper;
 import com.example.application.mapper.UserEntityMapper;
 import com.example.application.mapper.UserRoleEntityMapper;
 import com.example.application.service.UserService;
+import com.example.core.exception.utils.Roles;
 import com.example.domain.Role;
 import com.example.domain.User;
 import com.example.domain.UserRole;
@@ -41,11 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getListUser() {
         Iterable<UserEntity> userEntities = userRepository.findAll();
-        List<User> users =  Streams.stream(userEntities).map(userEntityMapper::toDomain).collect(Collectors.toList());
-        users.forEach(user -> {
-            enrichUser(user);
-        });
-        return users;
+        return mapUserEntitiesToUsers(userEntities);
     }
 
     @Override
@@ -70,13 +67,25 @@ public class UserServiceImpl implements UserService {
 
     
     private void assignUserRoleToUser(User user) {
-        // prepare domain model 
-        RoleEntity defaultRoleEntity = roleRepository.findByRoleName("User");
-        Role defaultRole = roleEntityMapper.toDomain(defaultRoleEntity);
+        Role defaultRole = prepareRoleObject(Roles.USER_ROLE);
         user.addRole(defaultRole);
+        persistUserRole(user, defaultRole);
+    }
 
-        // and persist data
-        UserRole newUserRole = new UserRole(user.getId(), defaultRole.getId());
+    private void assignAdminRoleToUser(User user) {
+        Role defaultRole = prepareRoleObject(Roles.ADMIN_ROLE);
+        user.addRole(defaultRole);
+        persistUserRole(user, defaultRole);
+    }
+
+    private Role prepareRoleObject(String role) {
+        RoleEntity defaultRoleEntity = roleRepository.findByRoleName(role);
+        Role defaultRole = roleEntityMapper.toDomain(defaultRoleEntity);
+        return defaultRole;
+    }
+
+    private void persistUserRole(User user, Role role) {
+        UserRole newUserRole = new UserRole(user.getId(), role.getId());
         UserRoleEntity newUserRoleEntity = userRoleEntityMapper.toEntity(newUserRole);
         userRoleRepository.save(newUserRoleEntity);
     }
@@ -94,7 +103,7 @@ public class UserServiceImpl implements UserService {
     public User addUser(UserRequest userRequest) {
         User user = new User(userRequest);
         user.enrichPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setEnabled(true);
         assignUserRoleToUser(user);
 
 

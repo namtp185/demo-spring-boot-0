@@ -26,6 +26,9 @@ public class UserEntity {
     private String id;
 
     @Column(length = 40)
+    private String email;
+
+    @Column(length = 40)
     private String username;
 
     @Column(length = 80)
@@ -42,4 +45,7 @@ public class UserEntity {
     
     @Column(length = 40)
     private String gender;
+
+    @Column
+    private boolean isEnabled;
 }

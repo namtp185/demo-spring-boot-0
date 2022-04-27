@@ -35,4 +35,7 @@ public class UserRequest {
     private int age;
     private String occupation;
     private String gender;
+
+    private boolean isEnabled;
+    private String email;
 }

@@ -45,11 +45,22 @@ public class UserControllerV2 {
 		log.info("get users with id {}", id);
 	}
 
-	@GetMapping()
+	// only admin role can access this route
+	@GetMapping("/search")
 	@ResponseBody
 	public List<User> searchUser(@RequestParam(name = "name") String name, @RequestParam(name = "gender") String gender) {
 		log.info("Enter route: get users with param: name: {}, gender: {}", name, gender);
 		List<User> users = userService.searchUserByGenderAndName(gender, name);
+		log.info("Exit route");
+		return users;
+	}
+
+	// only admin role can access this route
+	@GetMapping("/")
+	@ResponseBody
+	public List<User> getAllUsers() {
+		log.info("Enter route: get all users");
+		List<User> users = userService.getListUser();
 		log.info("Exit route");
 		return users;
 	}

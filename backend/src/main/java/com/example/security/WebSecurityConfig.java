@@ -1,5 +1,6 @@
 package com.example.security;
 
+import com.example.core.exception.utils.Roles;
 import com.example.security.jwt.JwtAuthenticationFilter;
 import com.example.security.user.UserDetailsServiceImpl;
 
@@ -13,7 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -22,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
     
     // @Override
     // protected void configure(HttpSecurity http) throws Exception {
@@ -63,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .authorizeRequests()
                 .antMatchers("/v2/login").permitAll()
+                // .antMatchers("/v2/users/").hasRole(Roles.ADMIN_ROLE)
+                // .antMatchers("/v2/users/search").hasRole(Roles.ADMIN_ROLE)
                 .antMatchers("/v2/users/register").permitAll()
                 .anyRequest().authenticated();
         
@@ -74,12 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder managerBuilder) throws Exception {
         managerBuilder.userDetailsService(userDetailsServiceImpl)
-            .passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+            .passwordEncoder(passwordEncoder);
     }
 
     @Bean
