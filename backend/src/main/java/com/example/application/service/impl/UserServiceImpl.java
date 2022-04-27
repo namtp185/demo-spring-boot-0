@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Override
     public User getUserByUsername(String username) {
         // use functional interface
         return findUserByOneField(userRepository::findByUsername, username);
