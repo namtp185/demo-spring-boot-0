@@ -32,3 +32,4 @@ target/
 *.ipr
 
 db/
+src/main/resources/application.properties
